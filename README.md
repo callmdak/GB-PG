@@ -6,25 +6,6 @@ Trabalho do **Grau B** de **Processamento Gráfico: Fundamentos**
 
 ---
 
-## Sumário
-
-- [Requisitos do enunciado × implementação](#requisitos-do-enunciado--implementação)
-- [Relação com o conteúdo da disciplina](#relação-com-o-conteúdo-da-disciplina)
-- [Como executar](#como-executar)
-- [Como usar](#como-usar)
-- [Filtros](#filtros-26)
-- [Seleção de canais](#seleção-de-canais)
-- [Operações com duas imagens](#operações-com-duas-imagens-7)
-- [Stickers](#stickers-11)
-- [Extras implementados](#extras-implementados)
-- [Estrutura do projeto](#estrutura-do-projeto)
-- [Detalhes de implementação](#detalhes-de-implementação)
-- [Testes](#testes)
-- [Problemas comuns](#problemas-comuns)
-- [Referências e créditos](#referências-e-créditos)
-
----
-
 ## Requisitos do enunciado × implementação
 
 | Requisito | Onde / como |
