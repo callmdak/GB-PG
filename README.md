@@ -1,14 +1,8 @@
 # PG Stories — editor de imagens e vídeo com filtros e stickers
 
-Trabalho do **Grau B** da disciplina **Processamento Gráfico: Fundamentos** (Unisinos — Escola Politécnica, 2026/2).
+Trabalho do **Grau B** de **Processamento Gráfico: Fundamentos**
 
-Protótipo de um aplicativo de edição de imagens e vídeo inspirado nos *stories* do Instagram, com foco em
-técnicas de **processamento de imagens**: filtros de suavização e realce, seleção de canais, operações
-aritméticas entre duas imagens e stickers com transparência, inclusive animados.
-
-**Professora:** Rossana Baptista Queiroz · **Autores:** Fábio Silveira e Pedro Scott
-
-![Interface do PG Stories com filtros e stickers aplicados](docs/tela_stickers.jpg)
+**Nomes:** Fábio Silveira e Pedro Scott
 
 ---
 
@@ -48,51 +42,16 @@ aritméticas entre duas imagens e stickers com transparência, inclusive animado
 | Interface (console/teclado ou mista) | Interface gráfica completa em **Qt (PySide6)** + mensagens no console |
 | Tecnologias | **Python + OpenCV** (e NumPy) |
 
-**Extras (opcionais) implementados:** interface gráfica com biblioteca externa (Qt), combinação de filtros
+**Desafios feitos:** interface gráfica com biblioteca externa (Qt), combinação de filtros
 em sequência e stickers animados por *spritesheet* — detalhes em [Extras implementados](#extras-implementados).
-
----
-
-## Relação com o conteúdo da disciplina
-
-Os recursos do projeto foram construídos a partir dos conteúdos do plano de ensino e das referências do
-enunciado (Gonzalez & Woods e a documentação oficial do OpenCV):
-
-| Aula (plano de ensino) | Onde aparece no projeto |
-|---|---|
-| Transformações em objetos (semanas 6 e 7) | Escala, rotação e translação dos stickers (`cv2.resize`, `cv2.getRotationMatrix2D` + `cv2.warpAffine`) |
-| Camadas e animação de sprites (semana 9) | Stickers como camadas com canal alfa sobre a imagem; stickers animados por *spritesheet*, com quadro = ⌊t·fps⌋ mod n |
-| Sistemas de Cores (semana 11) | Canais R, G e B (seleção de canais), tons de cinza pela luminância, HSV (saturação), YCrCb (equalização só da luminância), negativo, sépia, temperatura de cor e pseudocor |
-| Introdução ao Processamento de Imagens (semana 12) | Operações pontuais: brilho e contraste, correção gama, limiarização (binária, Otsu, adaptativa), posterização (redução de níveis de intensidade), equalização de histograma; operações aritméticas entre duas imagens |
-| Processamento de Imagens: OpenCV (semana 13) | Leitura e gravação de imagens, captura da webcam (`cv2.VideoCapture`), conversões de espaço de cor, redimensionamento (pixelização), `cv2.add` / `cv2.addWeighted` |
-| Processamento de Imagens: filtros (semana 14) | Convolução com kernels: box, gaussiano, mediana, bilateral, nitidez, unsharp mask, Laplaciano, Sobel e relevo (`cv2.filter2D`); morfologia (erosão, dilatação…); ruído gaussiano e sal e pimenta para testar a suavização; vinheta (multiplicação por máscara); cartoon (combinação de filtros) |
-| Introdução à Visão Computacional (semana 15) | Detector de bordas de Canny |
-
-A única parte que vai além do conteúdo das aulas é a **interface em Qt (PySide6)**: ela está no projeto
-porque o enunciado lista *"Interface Gráfica com biblioteca externa (ex.: Qt, Dear ImGui, Tkinter)"* como
-extra. Todo o processamento de imagens é feito só com OpenCV e NumPy.
 
 ---
 
 ## Como executar
 
-Requisitos: **Python 3.10 ou superior** (testado com 3.13) e uma webcam para o modo vídeo (opcional).
+Requisitos: Python 13.3
 
-> Sem o git instalado: na página do repositório no GitHub, clique em **Code → Download ZIP**, descompacte
-> e abra o terminal dentro da pasta descompactada (a que tem o `main.py`).
-
-### Linux
-
-```bash
-git clone <URL-deste-repositório>
-cd <pasta-do-repositório>
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-python main.py
-```
-
-### Windows (PowerShell)
+### Powershell
 
 ```powershell
 git clone <URL-deste-repositório>
@@ -102,9 +61,6 @@ py -m venv .venv
 pip install -r requirements.txt
 python main.py
 ```
-
-> Se o PowerShell bloquear o `Activate.ps1`, rode antes
-> `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` ou use o `cmd` com `.venv\Scripts\activate.bat`.
 
 ### Opções de linha de comando
 
@@ -121,8 +77,6 @@ python main.py --video caminho/do/video.mp4    # Modo Vídeo a partir de um arqu
 ## Como usar
 
 A janela tem a **imagem à esquerda** e um **painel com quatro abas** à direita.
-
-![Aba de filtros com a descrição do filtro selecionado](docs/tela_filtros.jpg)
 
 1. **Escolha a fonte**: *Abrir foto*, *Exemplos* (fotos que acompanham o projeto), *Iniciar webcam* ou
    *Abrir vídeo*. O selo no canto superior direito mostra o modo atual (**MODO FOTO** / **MODO VÍDEO**).
@@ -141,7 +95,7 @@ A janela tem a **imagem à esquerda** e um **painel com quatro abas** à direita
 Ao **parar a webcam**, o último quadro vira uma foto editável (Modo Foto), o que facilita colar stickers com
 calma e salvar.
 
-### Atalhos
+### Key combos e shortcuts
 
 | Atalho | Ação |
 |---|---|
@@ -154,23 +108,6 @@ calma e salvar.
 | Botão *Ver original (segure)* | Mostra a imagem sem efeitos enquanto estiver pressionado |
 | Clique esquerdo na imagem | Colar o sticker selecionado / arrastar um sticker |
 | Clique direito num sticker | Remover o sticker |
-
-### Mensagens no console
-
-O terminal em que o programa foi aberto mostra a descrição de cada filtro/operação **no momento em que é
-selecionado** (antes de aplicar), além do histórico do pipeline:
-
-```text
-======================================================================
-Filtro selecionado (ainda não aplicado):
-[Realce] Máscara de nitidez (Unsharp Mask)
-  Técnica clássica de realce: subtrai da imagem uma versão desfocada dela (máscara = original − desfocada)
-  e soma essa máscara multiplicada pela quantidade.
-  Parâmetros configuráveis:
-   - Quantidade (0 a 5; padrão: 1.5): quanto da máscara de detalhes é somado à imagem.
-   - Raio (sigma) (0.5 a 15; padrão: 3): tamanho dos detalhes realçados (sigma do desfoque gaussiano).
-[pipeline] + Máscara de nitidez (Unsharp Mask)  (q=1.5, σ=3)  · RGB
-```
 
 ---
 
@@ -208,8 +145,6 @@ Filtro selecionado (ainda não aplicado):
 A descrição completa de cada filtro e de cada parâmetro está no próprio código
 ([`pgstories/filters.py`](pgstories/filters.py)) e é exibida pelo programa ao selecionar o filtro.
 
-![Galeria com todos os filtros aplicados à foto de exemplo](docs/galeria_filtros.jpg)
-
 > Dica para testar a suavização: aplique **Adicionar ruído → Sal e pimenta** e depois **Filtro da mediana**
 > (remove quase todo o ruído) e compare com o **Desfoque de caixa** (que só espalha o ruído).
 
@@ -224,10 +159,6 @@ Cada filtro (e cada operação) pode ser aplicado:
 - **somente no canal R, G ou B** — o efeito é aplicado só naquele canal e **a imagem principal passa a
   exibir o resultado desse canal**, na cor do canal ou em tons de cinza (opção *"Canal isolado na cor do
   canal"*).
-
-![Equalização de histograma aplicada só no canal R](docs/tela_canal_r.jpg)
-
-![Desfoque gaussiano aplicado em cada modo de canal](docs/galeria_canais.jpg)
 
 ---
 
@@ -251,8 +182,6 @@ Texturas prontas para usar como B ficam em [`assets/texturas`](assets/texturas):
 *bokeh*, *por_do_sol*, *papel_antigo* e *moldura* (com **Máximo** + *Esticar* vira uma borda de polaroid).
 Na webcam, **"Usar imagem atual como B" + Diferença absoluta** mostra só o que se moveu na cena.
 
-![Galeria das operações entre duas imagens](docs/galeria_operacoes.jpg)
-
 ---
 
 ## Stickers (11)
@@ -261,7 +190,7 @@ Todos os stickers são PNG com **canal alfa** (transparência), desenhados por c
 ([`tools/gerar_assets.py`](tools/gerar_assets.py)):
 
 - **Estáticos (8):** estrela, coração, óculos escuros, coroa, bigode, balão "UAU!", orelhas de gato e arco-íris.
-- **Animados (3):** coração pulsante (8 quadros), estrela girando (12 quadros) e brilhos (12 quadros), em
+- **Animados (3):** coração pulsante (8 frames), estrela girando (12 frames) e brilhos (12 frames), em
   ***spritesheet*** horizontal.
 
 Cada sticker tem um arquivo `.json` ao lado com nome, descrição e — nos animados — o número de quadros
@@ -314,32 +243,6 @@ relativas à imagem).
 └── docs/                      # imagens usadas neste README
 ```
 
-O **núcleo de processamento** (`filters`, `operations`, `pipeline`, `stickers`, `video`) não depende da
-interface: pode ser usado e testado sem abrir janelas.
-
----
-
-## Detalhes de implementação
-
-- **Descrição dos efeitos como dados.** Cada filtro/operação é um `EffectSpec` com nome, categoria, descrição,
-  lista de `Param` (tipo, faixa, padrão, ajuda) e a função que processa. A interface monta os controles a
-  partir disso e o mesmo texto é mostrado no painel e no console.
-- **Pipeline não destrutivo.** A imagem original nunca é alterada; o resultado é sempre recalculado a partir
-  dela aplicando a lista de passos. Por isso *Resetar* e *Desfazer* são exatos e o mesmo pipeline vale para
-  a foto e para cada quadro da webcam.
-- **Seleção de canais.** Antes de cada passo a imagem é convertida para o formato do modo escolhido
-  (BGR, cinza ou um canal isolado); depois o resultado volta a ser BGR para exibição — no modo canal, só o
-  canal processado é exibido.
-- **Kernels.** Tamanhos de janela são forçados a valores ímpares; filtros lineares usam `cv2.filter2D`,
-  `cv2.GaussianBlur`, `cv2.blur` etc., e os que geram valores negativos (Laplaciano, Sobel) são calculados em
-  `float32` antes de voltar a 8 bits.
-- **Stickers e alfa.** `resultado = α·sticker + (1 − α)·fundo`, recortando o sticker quando ele passa da borda
-  da imagem. Redimensionamento e rotação ficam em cache para o vídeo continuar fluido.
-- **Caminhos com acento.** `cv2.imread`/`cv2.imwrite` falham no Windows com caminhos como
-  `C:\Users\...\Área de Trabalho`; por isso a leitura/gravação usa `np.fromfile` + `cv2.imdecode` e
-  `cv2.imencode` + `tofile`.
-- **Fotos grandes** são reduzidas para no máximo 1920 px no maior lado, para a prévia continuar interativa.
-
 ---
 
 ## Testes
@@ -351,23 +254,3 @@ python tools/capturas_de_tela.py # teste da interface sem janela (gera as imagen
 ```
 
 ---
-
-## Problemas comuns
-
-| Problema | Solução |
-|---|---|
-| `qt.qpa.plugin: Could not load the Qt platform plugin "xcb"` (Linux) | Verifique se o pacote `opencv-python` (não *headless*) está instalado no mesmo ambiente: `pip uninstall opencv-python` e mantenha só o `opencv-python-headless`. Em sessões Wayland também dá para forçar `QT_QPA_PLATFORM=wayland python main.py` |
-| A webcam não abre | Feche outros programas que usam a câmera, tente outro índice no campo **Câmera** ou outra resolução. No Linux o usuário precisa ter acesso a `/dev/video*` |
-| Vídeo lento | Escolha **640 × 480** na resolução da câmera e evite muitos filtros pesados (bilateral, cartoon) ao mesmo tempo |
-
----
-
-## Referências e créditos
-
-- GONZALEZ, Rafael C.; WOODS, Richard E. *Digital image processing*. 4th ed. Noida: Pearson, c2018.
-- Material das aulas de Processamento Gráfico: Fundamentos (Unisinos, 2026/2), conforme o plano de ensino.
-- Documentação oficial do OpenCV: <https://docs.opencv.org/4.x/>
-- Qt for Python (PySide6): <https://doc.qt.io/qtforpython-6/>
-- Fotos de exemplo (`assets/exemplos`): *gato* (Stefan van der Walt, CC0), *café* (Rachel Michetti, CC0) e
-  *foguete* (SpaceX, domínio público), distribuídas com a biblioteca scikit-image.
-- Stickers e texturas: criados por código para este trabalho (`tools/gerar_assets.py`).
