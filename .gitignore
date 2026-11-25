@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Ambientes virtuais
+.venv/
+venv/
+env/
+
+# Imagens salvas pelo aplicativo
+saidas/
+
+# IDEs e editores
+.idea/
+.vscode/
+*.swp
+.vs/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini

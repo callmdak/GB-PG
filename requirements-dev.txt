@@ -1,0 +1,4 @@
+# Dependências extras só para desenvolvimento (testes e scripts da pasta tools/)
+-r requirements.txt
+pytest>=7
+Pillow>=10

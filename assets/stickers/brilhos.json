@@ -1,0 +1,8 @@
+{
+  "nome": "Brilhos",
+  "descricao": "Brilhos que piscam (spritesheet com 12 quadros).",
+  "frames": 12,
+  "cols": 12,
+  "rows": 1,
+  "fps": 12
+}
